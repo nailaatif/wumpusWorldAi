@@ -1,9 +1,4 @@
-/* ======================================================
-   MODULE 1 — WumpusWorld
-   The real environment (hidden from the agent).
-   Handles grid layout, placing Wumpus / pits / gold,
-   and generating percepts (breeze near pit, stench near Wumpus).
-   ====================================================== */
+
 class WumpusWorld {
   constructor(rows, cols, pitPct = 0.20) {
     this.rows = rows;
