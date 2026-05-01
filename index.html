@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wumpus World</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <h1>🗺️ Wumpus World</h1>
+  <p class="subtitle">A knowledge-based agent explores a dangerous cave using logical inference (propositional resolution).</p>
+
+  <!-- Config bar -->
+  <div class="topbar">
+    <label>Rows</label>
+    <input type="number" id="cfg-rows" min="3" max="7" value="4">
+    <label>Cols</label>
+    <input type="number" id="cfg-cols" min="3" max="7" value="4">
+    <label>Pit %</label>
+    <input type="number" id="cfg-pit" min="5" max="45" value="20">
+    <button class="primary" onclick="initGame()">⟳ New World</button>
+    <button id="btn-reveal" onclick="toggleReveal()" disabled>👁 Reveal</button>
+  </div>
+
+  <!-- Controls -->
+  <div class="ctrl">
+    <button id="btn-step" onclick="doStep()" disabled>▶ Step</button>
+    <button id="btn-auto" onclick="toggleAuto()" disabled>▶▶ Auto</button>
+    <span class="status-txt" id="status-txt">Click "New World" to begin</span>
+    <div class="speed-row">
+      Speed:
+      <input type="range" id="speed" min="100" max="1800" value="700" step="100" oninput="onSpeedChange()">
+      <span id="spd-lbl">700ms</span>
+    </div>
+  </div>
+
+  <!-- Main layout -->
+  <div class="main-layout">
+
+    <!-- Grid -->
+    <div id="grid-wrap">
+      <div id="grid"></div>
+      <div class="legend">
+        <div class="legend-item">
+          <div class="ldot" style="background:#e8f5e9;border-color:#66bb6a"></div> Safe
+        </div>
+        <div class="legend-item">
+          <div class="ldot" style="background:#e8eaf6;border-color:#9fa8da"></div> Visited
+        </div>
+        <div class="legend-item">
+          <div class="ldot" style="background:#ffebee;border-color:#ef5350"></div> Danger
+        </div>
+        <div class="legend-item">
+          <div class="ldot" style="background:#f5f0e8;border-color:#ccc"></div> Unknown
+        </div>
+        <div class="legend-item">🧭 Agent &nbsp; 🕳 Pit &nbsp; 👹 Wumpus &nbsp; ⭐ Gold</div>
+      </div>
+    </div>
+
+    <!-- Right panel -->
+    <div class="right-panel">
+
+      <!-- Stats -->
+      <div class="card">
+        <div class="card-title">Statistics</div>
+        <div class="stat-row">
+          <div class="stat"><div class="stat-num" id="s-steps">0</div><div class="stat-lbl">Steps</div></div>
+          <div class="stat"><div class="stat-num" id="s-infer">0</div><div class="stat-lbl">Inferences</div></div>
+          <div class="stat"><div class="stat-num" id="s-safe">0</div><div class="stat-lbl">Safe known</div></div>
+          <div class="stat"><div class="stat-num" id="s-danger">0</div><div class="stat-lbl">Danger known</div></div>
+        </div>
+      </div>
+
+      <!-- Current percepts -->
+      <div class="card">
+        <div class="card-title">What the agent senses at <span id="cur-pos">(0,0)</span></div>
+        <div class="percept-pills">
+          <span class="pill" id="pp-B">💨 Breeze</span>
+          <span class="pill" id="pp-S">🌫 Stench</span>
+          <span class="pill" id="pp-G">⭐ Glitter</span>
+        </div>
+      </div>
+
+      <!-- Inference -->
+      <div class="card">
+        <div class="card-title">Latest reasoning (resolution inference)</div>
+        <div id="infer"><span style="color:#bbb">Nothing yet…</span></div>
+      </div>
+
+      <!-- Log -->
+      <div class="card">
+        <div class="card-title">Knowledge base log</div>
+        <div id="log"><span style="color:#bbb">Nothing yet…</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div id="modal">
+    <div class="modal-box">
+      <div class="modal-icon" id="m-icon">❓</div>
+      <div class="modal-title" id="m-title">–</div>
+      <div class="modal-msg" id="m-msg">–</div>
+      <button class="primary" onclick="closeModal();initGame()">⟳ New World</button>
+      &nbsp;
+      <button onclick="closeModal()">Close</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
